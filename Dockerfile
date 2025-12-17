@@ -1,9 +1,9 @@
 # Utiliser une image de base pour le build Maven
-FROM maven:3.8.7-jdk-17 AS build
+FROM maven:3.9.3-openjdk-17 AS build
 
 # vos commandes de build ici
 WORKDIR /build
-COPY src/api/src/main/resources .
+COPY . .
 RUN ["mvn", "clean", "package", "-DskipTests"]
 
 # Image finale pour l’excution
@@ -14,3 +14,4 @@ EXPOSE 8080
 # vos commandes d’execution ici
 COPY --from=build /build/target/*.jar /app/*.jar
 ENTRYPOINT ["java", "-jar", "/app/*.jar"]
+
