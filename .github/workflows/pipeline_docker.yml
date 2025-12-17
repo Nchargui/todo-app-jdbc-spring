@@ -18,7 +18,7 @@ jobs:
       run: mvn clean package -DskipTests
 
     - name: build docker image
-      run: docker build -t ghcr.io/nchargui/todo-app-jdbc-spring:$(git rev-parse --short HEAD) .
+      run: docker build -t ghcr.io/nchargui/todo-app-jdbc-spring:$(git rev-parse --short HEAD) -f ./Dockerfile .
     
     - name: authentication et push de l'image docker
       run: |
