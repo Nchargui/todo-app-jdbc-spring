@@ -1,0 +1,26 @@
+name: Docker Image CI/CD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout
+      uses: actions/checkout@v4
+    
+    - name: compilation maven
+      run: mvn clean package -DskipTests
+
+    - name: build docker image
+      run: docker build -t ghcr.io/Nchargui/todo-app-jdbc-spring:$(git rev-parse --short HEAD) .
+    
+    - name: authentication et push de docker image
+      run: |
+        echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u Nchargui --password-stdin
+        docker push ghcr.io/Nchargui/todo-app-jdbc-spring:$(git rev-parse --short HEAD)
+
