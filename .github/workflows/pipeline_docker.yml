@@ -18,10 +18,10 @@ jobs:
       run: mvn clean package -DskipTests
 
     - name: build docker image
-      run: docker build -t ghcr.io/Nchargui/todo-app-jdbc-spring:$(git rev-parse --short HEAD) .
+      run: docker build -t ghcr.io/nchargui/todo-app-jdbc-spring:$(git rev-parse --short HEAD) .
     
-    - name: authentication et push de docker image
+    - name: authentication et push de l'image docker
       run: |
-        echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u Nchargui --password-stdin
-        docker push ghcr.io/Nchargui/todo-app-jdbc-spring:$(git rev-parse --short HEAD)
+        echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u nchargui --password-stdin
+        docker push ghcr.io/nchargui/todo-app-jdbc-spring:$(git rev-parse --short HEAD)
 
