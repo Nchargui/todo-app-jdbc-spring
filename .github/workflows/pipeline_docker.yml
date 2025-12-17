@@ -22,6 +22,6 @@ jobs:
     
     - name: authentication et push de l'image docker
       run: |
-        echo "${{ secrets.GHCR_TOKEN }}" | docker login ghcr.io -u nchargui --password-stdin
+        echo ${{ secrets.GHCR_TOKEN }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
         docker push ghcr.io/nchargui/todo-app-jdbc-spring:$(git rev-parse --short HEAD)
 
